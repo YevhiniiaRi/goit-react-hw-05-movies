@@ -1,0 +1,16 @@
+.nav-menu {
+  display: flex;
+  list-style: none;
+  padding: 0;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: black;
+  padding: 5px;
+}
+
+.active-link {
+  color: red;
+  font-weight: bold;
+}
