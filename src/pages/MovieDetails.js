@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, Outlet, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 const MovieDetails = () => {
@@ -50,6 +50,18 @@ const MovieDetails = () => {
             ))}
           </p>
         </div>
+      </div>
+      <div>
+        <ul>
+          <p>Additional information</p>
+          <li>
+            <Link to="cast">Cast</Link>
+          </li>
+          <li>
+            <Link to="reviews">Reviews</Link>
+          </li>
+              </ul>
+              <Outlet />
       </div>
     </div>
   );
