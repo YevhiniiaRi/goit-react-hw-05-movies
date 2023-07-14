@@ -28,9 +28,13 @@ const Cast = () => {
   return (
     <div>
       <ul>
-        <li>
-          {cast.map(actor => (
-            <div key={actor.id} style={{ marginBottom: '20px' }}>
+        {cast.map(actor => {
+          if (!actor.profile_path) {
+            return null; // Пропустити акторів без зображень профілю
+          }
+
+          return (
+            <li key={actor.id} style={{ marginBottom: '20px' }}>
               <img
                 src={`https://image.tmdb.org/t/p/w200/${actor.profile_path}`}
                 alt={actor.name}
@@ -42,9 +46,9 @@ const Cast = () => {
                 </p>
                 <p>Character: {actor.character}</p>
               </div>
-            </div>
-          ))}
-        </li>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

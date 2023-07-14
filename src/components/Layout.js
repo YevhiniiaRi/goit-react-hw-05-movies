@@ -1,5 +1,5 @@
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
-import './Layout.css';
+import './Styles.css';
 
 export const Layout = () => {
   const location = useLocation();
@@ -10,7 +10,6 @@ export const Layout = () => {
         <li>
           <NavLink
             to="/"
-            exact
             className={`nav-link ${
               location.pathname === '/' ? 'active-link' : ''
             }`}
@@ -21,7 +20,6 @@ export const Layout = () => {
         <li>
           <NavLink
             to="/movies"
-            exact
             className={`nav-link ${
               location.pathname === '/movies' ? 'active-link' : ''
             }`}

@@ -14,3 +14,8 @@
   color: red;
   font-weight: bold;
 }
+
+.app-container {
+  padding: 20px;
+  margin: 20px;
+}
