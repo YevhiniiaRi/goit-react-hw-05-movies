@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import PropTypes from 'prop-types';
+
 
 const Cast = () => {
   const { movieId } = useParams();
@@ -52,6 +54,10 @@ const Cast = () => {
       </ul>
     </div>
   );
+};
+
+Cast.propTypes = {
+  movieId: PropTypes.string,
 };
 
 export default Cast;

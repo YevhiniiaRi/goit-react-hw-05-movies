@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
 const Reviews = () => {
   const { movieId } = useParams();
@@ -38,6 +39,10 @@ const Reviews = () => {
       </ul>
     </div>
   );
+};
+
+Reviews.propTypes = {
+  movieId: PropTypes.string,
 };
 
 export default Reviews;

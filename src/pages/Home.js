@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
 
 const Home = () => {
   const [movies, setMovies] = useState([]);
@@ -36,5 +38,10 @@ const Home = () => {
     </div>
   );
 };
+
+Home.propTypes = {
+  movieId: PropTypes.string,
+};
+
 
 export default Home;

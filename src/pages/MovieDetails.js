@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link, Outlet, useParams } from 'react-router-dom';
 import axios from 'axios';
+import PropTypes from 'prop-types';
+
 
 const MovieDetails = () => {
   const { movieId } = useParams();
@@ -71,6 +73,10 @@ const MovieDetails = () => {
       </div>
     </div>
   );
+};
+
+MovieDetails.propTypes = {
+  movieId: PropTypes.string,
 };
 
 export default MovieDetails;
