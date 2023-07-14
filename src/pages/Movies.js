@@ -17,13 +17,14 @@ const Movie = () => {
     }
   };
 
+  const handleInputChange = async e => {
+    setKeyword(e.target.value);
+    handleSearch();
+  };
+
   return (
     <div>
-      <input
-        type="text"
-        value={keyword}
-        onChange={e => setKeyword(e.target.value)}
-      />
+      <input type="text" value={keyword} onChange={handleInputChange} />
       <button onClick={handleSearch}>Search</button>
       <ul>
         {movies.map(movie => (
