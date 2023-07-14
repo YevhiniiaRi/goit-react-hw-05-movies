@@ -19,7 +19,12 @@ const Movie = () => {
   };
 
   const handleInputChange = e => {
-    setSearchParams({ query: e.target.value });
+    const inputValue = e.target.value;
+    setSearchParams({ query: inputValue });
+
+    if (inputValue.trim() === '') {
+      setSearchParams({});
+    }
   };
 
   return (
