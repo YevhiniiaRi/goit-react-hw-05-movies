@@ -18,12 +18,22 @@ const Movie = () => {
     }
   };
 
-  const handleInputChange = e => {
+  const handleInputChange = async e => {
     const inputValue = e.target.value;
     setSearchParams({ query: inputValue });
 
     if (inputValue.trim() === '') {
       setSearchParams({});
+    } else {
+      try {
+        const response = await fetch(
+          `https://api.themoviedb.org/3/search/movie?api_key=8e0989dbac705c526907a37342af002c&query=${inputValue}`
+        );
+        const data = await response.json();
+        setMovies(data.results);
+      } catch (error) {
+        console.error('Error searching movies:', error);
+      }
     }
   };
 
