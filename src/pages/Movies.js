@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 
 const Movie = () => {
-  const [keyword, setKeyword] = useState('');
-  const [movies, setMovies] = useState([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const keyword = searchParams.get('query') || '';
+  const [movies, setMovies] = React.useState([]);
 
   const handleSearch = async () => {
     try {
@@ -17,14 +18,24 @@ const Movie = () => {
     }
   };
 
-  const handleInputChange = async e => {
-    setKeyword(e.target.value);
-    handleSearch();
+  const handleInputChange = e => {
+    setSearchParams({ query: e.target.value });
   };
 
   return (
     <div>
-      <input type="text" value={keyword} onChange={handleInputChange} />
+      <div>
+        <Link to=".." className="go-back-link">
+          Go back
+        </Link>
+      </div>
+
+      <input
+        className="input"
+        type="text"
+        value={keyword}
+        onChange={handleInputChange}
+      />
       <button onClick={handleSearch}>Search</button>
       <ul>
         {movies.map(movie => (

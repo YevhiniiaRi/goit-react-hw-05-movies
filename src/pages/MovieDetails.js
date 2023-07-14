@@ -30,11 +30,17 @@ const MovieDetails = () => {
 
   return (
     <div>
+      <div>
+        <Link to=".." className="go-back-link">
+          Go back
+        </Link>
+      </div>
+
       <div style={{ display: 'flex' }}>
         <img
           src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
           alt={title}
-          style={{ marginRight: '20px' }}
+          style={{ marginRight: '20px', marginTop: '20px' }}
         />
         <div>
           <h2>
@@ -60,8 +66,8 @@ const MovieDetails = () => {
           <li>
             <Link to="reviews">Reviews</Link>
           </li>
-              </ul>
-              <Outlet />
+        </ul>
+        <Outlet />
       </div>
     </div>
   );

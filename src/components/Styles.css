@@ -7,7 +7,7 @@
 .nav-link {
   text-decoration: none;
   color: black;
-  padding: 5px;
+  padding-right: 10px;
 }
 
 .active-link {
@@ -18,4 +18,17 @@
 .app-container {
   padding: 20px;
   margin: 20px;
+}
+
+.go-back-link {
+  color: black;
+  border: solid 1px gray;
+  border-radius: 3px;
+  padding: 2px;
+  text-decoration: none;
+  
+}
+
+.input {
+  margin-top: 20px;
 }
