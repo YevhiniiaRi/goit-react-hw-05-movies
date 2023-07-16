@@ -6,10 +6,10 @@ const Movie = () => {
   const keyword = searchParams.get('query') || '';
   const [movies, setMovies] = React.useState([]);
 
-  const handleSearch = async () => {
+  const searchMovies = async inputValue => {
     try {
       const response = await fetch(
-        `https://api.themoviedb.org/3/search/movie?api_key=8e0989dbac705c526907a37342af002c&query=${keyword}`
+        `https://api.themoviedb.org/3/search/movie?api_key=8e0989dbac705c526907a37342af002c&query=${inputValue}`
       );
       const data = await response.json();
       setMovies(data.results);
@@ -18,22 +18,22 @@ const Movie = () => {
     }
   };
 
-  const handleInputChange = async e => {
+  const handleSearch = () => {
+    searchMovies(keyword);
+  };
+
+  const handleInputChange = e => {
     const inputValue = e.target.value;
-    setSearchParams({ query: inputValue });
 
     if (inputValue.trim() === '') {
-      setSearchParams({});
+      setSearchParams(prevParams => {
+        const newParams = new URLSearchParams(prevParams);
+        newParams.delete('query');
+        return newParams;
+      });
+      setMovies([]);
     } else {
-      try {
-        const response = await fetch(
-          `https://api.themoviedb.org/3/search/movie?api_key=8e0989dbac705c526907a37342af002c&query=${inputValue}`
-        );
-        const data = await response.json();
-        setMovies(data.results);
-      } catch (error) {
-        console.error('Error searching movies:', error);
-      }
+      setSearchParams({ query: inputValue });
     }
   };
 
