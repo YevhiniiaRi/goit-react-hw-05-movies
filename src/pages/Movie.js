@@ -5,6 +5,7 @@ const Movie = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const keyword = searchParams.get('query') || '';
   const [movies, setMovies] = React.useState([]);
+  const [isSearchPerformed, setIsSearchPerformed] = React.useState(false);
 
   const searchMovies = async inputValue => {
     try {
@@ -13,13 +14,19 @@ const Movie = () => {
       );
       const data = await response.json();
       setMovies(data.results);
+      setIsSearchPerformed(true);
     } catch (error) {
       console.error('Error searching movies:', error);
     }
   };
 
   const handleSearch = () => {
-    searchMovies(keyword);
+    if (keyword.trim() === '') {
+      setIsSearchPerformed(false);
+      setMovies([]);
+    } else {
+      searchMovies(keyword);
+    }
   };
 
   const handleInputChange = e => {
@@ -31,6 +38,7 @@ const Movie = () => {
         newParams.delete('query');
         return newParams;
       });
+      setIsSearchPerformed(false);
       setMovies([]);
     } else {
       setSearchParams({ query: inputValue });
@@ -52,13 +60,15 @@ const Movie = () => {
         onChange={handleInputChange}
       />
       <button onClick={handleSearch}>Search</button>
-      <ul>
-        {movies.map(movie => (
-          <li key={movie.id}>
-            <Link to={`/movies/${movie.id}`}>{movie.title}</Link>
-          </li>
-        ))}
-      </ul>
+      {isSearchPerformed && (
+        <ul>
+          {movies.map(movie => (
+            <li key={movie.id}>
+              <Link to={`/movies/${movie.id}`}>{movie.title}</Link>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };

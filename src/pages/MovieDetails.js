@@ -1,5 +1,5 @@
 import { useState, useEffect, Suspense } from 'react';
-import { Link, Outlet, useParams } from 'react-router-dom';
+import { Link, Outlet, useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 
@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 const MovieDetails = () => {
   const { movieId } = useParams();
   const [movieDetails, setMovieDetails] = useState(null);
+   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
@@ -33,9 +34,9 @@ const MovieDetails = () => {
   return (
     <div>
       <div>
-        <Link to=".." className="go-back-link">
+        <button onClick={() => navigate(-1)} className="go-back-link">
           Go back
-        </Link>
+        </button>
       </div>
 
       <div style={{ display: 'flex' }}>
