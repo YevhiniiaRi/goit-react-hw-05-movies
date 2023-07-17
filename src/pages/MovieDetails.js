@@ -1,20 +1,14 @@
-import { useState, useEffect, Suspense } from 'react';
-import {
-  Link,
-  Outlet,
-  useParams,
-  useNavigate,
-  useSearchParams,
-} from 'react-router-dom';
+import { useState, useEffect, Suspense, useRef } from 'react';
+import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+
 
 const MovieDetails = () => {
   const { movieId } = useParams();
   const [movieDetails, setMovieDetails] = useState(null);
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const query = searchParams.get('search');
+  const location = useLocation();
+  const backLinkLocationRef = useRef(location.state?.from ?? '/movies')
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
@@ -31,23 +25,6 @@ const MovieDetails = () => {
     fetchMovieDetails();
   }, [movieId]);
 
-  useEffect(() => {
-    if (query) {
-      const fetchMoviesByQuery = async () => {
-        try {
-          const response = await axios.get(
-            `https://api.themoviedb.org/3/search/movie?api_key=8e0989dbac705c526907a37342af002c&query=${query}`
-          );
-          console.log(response.data);
-        } catch (error) {
-          console.log(error);
-        }
-      };
-
-      fetchMoviesByQuery();
-    }
-  }, [query]);
-
   if (!movieDetails) {
     return <div>Loading...</div>;
   }
@@ -58,9 +35,9 @@ const MovieDetails = () => {
   return (
     <div>
       <div>
-        <button onClick={() => navigate(-1)} className="go-back-link">
+        <Link to={backLinkLocationRef.current} className="go-back-link">
           Go back
-        </button>
+        </Link>
       </div>
 
       <div style={{ display: 'flex' }}>
