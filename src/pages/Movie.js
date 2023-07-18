@@ -1,11 +1,13 @@
-import React from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import React, { useEffect, useRef } from 'react';
+import { Link, useSearchParams, useLocation } from 'react-router-dom';
 
 const Movie = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const keyword = searchParams.get('query') || '';
   const [movies, setMovies] = React.useState([]);
   const [isSearchPerformed, setIsSearchPerformed] = React.useState(false);
+  const location = useLocation();
+  const backLinkLocationRef = useRef(location.state?.from ?? '/');
 
   const searchMovies = async inputValue => {
     try {
@@ -19,6 +21,12 @@ const Movie = () => {
       console.error('Error searching movies:', error);
     }
   };
+
+  useEffect(() => {
+    if (keyword.trim() !== '') {
+      searchMovies(keyword);
+    }
+  }, []);
 
   const handleSearch = () => {
     if (keyword.trim() === '') {
@@ -48,7 +56,7 @@ const Movie = () => {
   return (
     <div>
       <div>
-        <Link to=".." className="go-back-link">
+        <Link to={backLinkLocationRef.current} className="go-back-link">
           Go back
         </Link>
       </div>
