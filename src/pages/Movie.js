@@ -6,6 +6,7 @@ const Movie = () => {
   const keyword = searchParams.get('query') || '';
   const [movies, setMovies] = React.useState([]);
   const [isSearchPerformed, setIsSearchPerformed] = React.useState(false);
+  const [searchTrigger, setSearchTrigger] = React.useState(false); // Додали стан searchTrigger
   const location = useLocation();
   const backLinkLocationRef = useRef(location.state?.from ?? '/');
 
@@ -16,24 +17,33 @@ const Movie = () => {
       );
       const data = await response.json();
       setMovies(data.results);
-      setIsSearchPerformed(true);
+      localStorage.setItem('movies', JSON.stringify(data.results)); // Зберігаємо колекцію фільмів у localStorage
     } catch (error) {
       console.error('Error searching movies:', error);
     }
   };
 
   useEffect(() => {
-    if (keyword.trim() !== '') {
-      searchMovies(keyword);
+    const storedMovies = localStorage.getItem('movies');
+    if (storedMovies) {
+      setMovies(JSON.parse(storedMovies)); // Відновлюємо колекцію фільмів з localStorage
+      setIsSearchPerformed(true);
     }
   }, []);
+
+  useEffect(() => {
+    if (searchTrigger && keyword.trim() !== '') {
+      searchMovies(keyword);
+      setIsSearchPerformed(true);
+    }
+  }, [searchTrigger, keyword]);
 
   const handleSearch = () => {
     if (keyword.trim() === '') {
       setIsSearchPerformed(false);
       setMovies([]);
     } else {
-      searchMovies(keyword);
+      setSearchTrigger(true);
     }
   };
 
